@@ -1,3 +1,7 @@
+//-------------------------------------------------------
+// Sequence "manager" code: parent creates subpatchers
+//-------------------------------------------------------
+
 autowatch = 1;
 
 var sequencers = 0;
@@ -9,18 +13,35 @@ function make(voices, beats) {
       x + 20 * sequencers,
       "patcher",
       "seq-" + ++sequencers);
-  var seq = new Sequencer(p.subpatcher(), voices, beats);
+  var seq = new Sequencer(sequencers, p.subpatcher(), voices, beats);
 }
+
+function save() {
+  // TODO: save and restore the current seq index
+}
+
+// TODO: break out individual sequencers into some kind of subpatcher...
+// currently we depend on this parent manager but tracking the indices
+// will get cumbersome and error-prone.
+// Unfortunately the child matrices now depend on the indices.
+// Need to rethink unique identification and indexing.
+
+//-------------------------------------------------------
+// Begin indvidual sequencer instance code
+//-------------------------------------------------------
 
 /**
  * Sequencer "class"
  */ 
-function Sequencer(patcher, voices, beats) {
+function Sequencer(idx, patcher, voices, beats) {
   var x = 0, y = 0;
   var outs;
   var driver;
-  var visuals = new VisualControls(patcher, x, y + 20, voices, beats);
+  // TODO: better mgmt of unique id's
+  var matrix_name = "seq-"+idx+"-matrix";
+  var visuals = new VisualControls(patcher, x, y + 20, voices, beats, matrix_name);
   var routing = new RoutingControls(patcher, x, y, voices, beats);
+  var saver = new StateSaver(patcher, matrix_name);
 
   // create outlets 
   outs = new Array(voices);
@@ -39,7 +60,7 @@ function Sequencer(patcher, voices, beats) {
   patcher.hiddenconnect(visuals.matrix, 0, routing.router, 0);
 
   // create driver
-  // TODO: allow caller to specify which driver
+  // TODO: allow caller to specify which driver (or kill metro driver?)
   //driver = new MetroDriver(patcher, beats, routing.route);
   driver = new CounterDriver(patcher, beats, routing.route);
 
@@ -47,7 +68,7 @@ function Sequencer(patcher, voices, beats) {
   patcher.locked = 1;
 }
 
-function VisualControls(patcher, x, y, voices, beats) {
+function VisualControls(patcher, x, y, voices, beats, matrix_name) {
   var matrix, 
     buttons;
 
@@ -57,6 +78,7 @@ function VisualControls(patcher, x, y, voices, beats) {
   matrix.columns(beats);
   matrix.scale(false);
   matrix.autosize(true);
+  matrix.varname = matrix_name;
 
   buttons = new Array(voices);
   for (var i = 0; i < voices; ++i) {
@@ -163,4 +185,11 @@ function CounterDriver(patcher, beats, route) {
   var track = patcher.newdefault(60, 0, "number");
   patcher.hiddenconnect(counter, 0, track, 0);
   patcher.hiddenconnect(rewind, 0, track, 0);
+}
+
+function StateSaver(patcher, matrix_name) {
+  var matrix = patcher.getnamed(matrix_name);
+  var savejs = patcher.newdefault(20, 20, "js", "savematrix.js", matrix_name);
+  savejs.hidden = true;
+  patcher.hiddenconnect(matrix, 0, savejs, 0);
 }
