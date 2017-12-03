@@ -3,6 +3,7 @@ autowatch = 1;
 var sequencers = 0;
 
 function make(voices, beats) {
+  var x = 0, y = 0;
   var p = this.patcher.newdefault(
       x,
       x + 20 * sequencers,
@@ -136,7 +137,7 @@ function CounterDriver(patcher, beats, route) {
   var counter, inBang, rewind, inRewind;
 
   // create counter
-  counter = patcher.newdefault(x, y, "counter", 1, beats);
+  counter = patcher.newdefault(0, 0, "counter", 1, beats);
   counter.hidden = true;
 
   // connect driver to route
@@ -159,7 +160,7 @@ function CounterDriver(patcher, beats, route) {
   patcher.hiddenconnect(inRewind, 0, rewind, 0);
 
   // create a counter
-  var track = patcher.newdefault(x + 60, y, "number");
+  var track = patcher.newdefault(60, 0, "number");
   patcher.hiddenconnect(counter, 0, track, 0);
   patcher.hiddenconnect(rewind, 0, track, 0);
 }
