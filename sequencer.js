@@ -70,6 +70,7 @@ function Sequencer(idx, patcher, voices, beats) {
 
 function VisualControls(patcher, x, y, voices, beats, matrix_name) {
   var matrix, 
+    loadBang,
     buttons;
 
   // create matrix and side buttons
@@ -79,6 +80,10 @@ function VisualControls(patcher, x, y, voices, beats, matrix_name) {
   matrix.scale(false);
   matrix.autosize(true);
   matrix.varname = matrix_name;
+
+  loadBang = patcher.newdefault(x+20, y, "loadbang");
+  loadBang.hidden = true;
+  patcher.hiddenconnect(loadBang, 0, matrix, 0);
 
   buttons = new Array(voices);
   for (var i = 0; i < voices; ++i) {
