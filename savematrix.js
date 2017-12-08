@@ -1,7 +1,6 @@
 autowatch = 1;
 
 var valmap = {};
-
 var MATRIX_NAME = jsarguments[1];
 
 function saveToMap(row, col, val) {

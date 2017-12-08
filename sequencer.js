@@ -1,9 +1,6 @@
 //-------------------------------------------------------
 // Sequence "manager" code: parent creates subpatchers
 //-------------------------------------------------------
-
-autowatch = 1;
-
 var sequencers = 0;
 
 function make(voices, beats) {
@@ -21,14 +18,13 @@ function save() {
 }
 
 // TODO: break out individual sequencers into some kind of subpatcher...
-// currently we depend on this parent manager but tracking the indices
-// will get cumbersome and error-prone.
-// Unfortunately the child matrices now depend on the indices.
-// Need to rethink unique identification and indexing.
 
 //-------------------------------------------------------
 // Begin indvidual sequencer instance code
 //-------------------------------------------------------
+
+// matrix name does not seem to have to be unique in multiple sequencers...
+var MATRIX_NAME = "main-matrix";
 
 /**
  * Sequencer "class"
@@ -37,11 +33,9 @@ function Sequencer(idx, patcher, voices, beats) {
   var x = 0, y = 0;
   var outs;
   var driver;
-  // TODO: better mgmt of unique id's
-  var matrix_name = "seq-"+idx+"-matrix";
-  var visuals = new VisualControls(patcher, x, y + 20, voices, beats, matrix_name);
+  var visuals = new VisualControls(patcher, x, y + 20, voices, beats);
   var routing = new RoutingControls(patcher, x, y, voices, beats);
-  var saver = new StateSaver(patcher, matrix_name);
+  var saver = new StateSaver(patcher);
 
   // create outlets 
   outs = new Array(voices);
@@ -60,17 +54,15 @@ function Sequencer(idx, patcher, voices, beats) {
   patcher.hiddenconnect(visuals.matrix, 0, routing.router, 0);
 
   // create driver
-  // TODO: allow caller to specify which driver (or kill metro driver?)
-  //driver = new MetroDriver(patcher, beats, routing.route);
   driver = new CounterDriver(patcher, beats, routing.route);
 
   patcher.bringtofront(visuals.matrix);
   patcher.locked = 1;
 }
 
-function VisualControls(patcher, x, y, voices, beats, matrix_name) {
+function VisualControls(patcher, x, y, voices, beats) {
   var matrix, 
-    loadBang,
+    pasteCheck,
     buttons;
 
   // create matrix and side buttons
@@ -79,11 +71,18 @@ function VisualControls(patcher, x, y, voices, beats, matrix_name) {
   matrix.columns(beats);
   matrix.scale(false);
   matrix.autosize(true);
-  matrix.varname = matrix_name;
+  matrix.varname = MATRIX_NAME;
 
-  loadBang = patcher.newdefault(x+20, y, "loadbang");
-  loadBang.hidden = true;
-  patcher.hiddenconnect(loadBang, 0, matrix, 0);
+  // this bangs the matrix on load and on copy/paste to make sure 
+  // the values restored in the StateSaver are applied to the 
+  // connected routing elements
+  pasteCheck = patcher.newdefault(
+      20,
+      20,
+      "js",
+      "pastecheck.js",
+      MATRIX_NAME);
+  pasteCheck.hidden = true;
 
   buttons = new Array(voices);
   for (var i = 0; i < voices; ++i) {
@@ -120,45 +119,8 @@ function RoutingControls(patcher, x, y, voices, beats) {
 }
 
 /**
- * Driver extension: Metro-based sequencer driver.
- * Allows sequencer to be driven by self-contained 
- * metro with quarter-note resolution and 
- * the global transport.
- *
- * Issues:
- *   * Seems to be an out of order issue (could be SeqMod)
- *   * Tricky if not impossible to "pause" or have this used as
- *     a subsequence to a larger "chain" of patterns
- *
- */ 
-function MetroDriver(patcher, beats, route) {
-  var metro,
-    seqMod;
-
-  // create metro
-  metro = patcher.newdefault(x, y, "metro", "4n");
-  metro.active(1);
-  metro.hidden = true;
-  
-  // create seqMod
-  seqMod = patcher.newdefault(x, 40, "SeqMod", beats);
-  seqMod.hidden = true;
-
-  // connect metro to seqMod
-  patcher.hiddenconnect(metro, 0, seqMod, 0);
-
-  // connect driver to route
-  patcher.hiddenconnect(seqMod, 0, route, 0);
-}
-
-
-/**
- * Driver extension: counter based sequencer driver.
+ * Counter based sequencer driver.
  * Allows an external bang to push through our steps.
- *
- * Issues:
- *  * How do we rewind?
- *  * Puts burden of metro/transport control on caller
  */ 
 function CounterDriver(patcher, beats, route) {
   var counter, inBang, rewind, inRewind;
@@ -192,9 +154,13 @@ function CounterDriver(patcher, beats, route) {
   patcher.hiddenconnect(rewind, 0, track, 0);
 }
 
-function StateSaver(patcher, matrix_name) {
-  var matrix = patcher.getnamed(matrix_name);
-  var savejs = patcher.newdefault(20, 20, "js", "savematrix.js", matrix_name);
+/**
+ * Uses an external js file to save the matrix state
+ * for later reload when the file is saved and loaded.
+ */
+function StateSaver(patcher) {
+  var matrix = patcher.getnamed(MATRIX_NAME);
+  var savejs = patcher.newdefault(20, 20, "js", "savematrix.js", MATRIX_NAME);
   savejs.hidden = true;
   patcher.hiddenconnect(matrix, 0, savejs, 0);
 }
