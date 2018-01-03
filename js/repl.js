@@ -147,3 +147,17 @@ function msmp() {
     pidx++;
   }
 }
+
+function orch() {
+  var height = 200;
+  var width = 85;
+  var x = 0;
+  var patcher = this.patcher.parentpatcher;
+
+  var orch = patcher.newdefault(0, 0, "bpatcher",
+      "Orch",
+      "@embed", 1
+      );
+  orch.rect = [x, 0, x + width, height];
+
+}

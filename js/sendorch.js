@@ -13,13 +13,14 @@ function text() {
   for (var i = 1; i < a.length; ++i) {
     var sendName = a[i];
     var count = a[i + 1];
-    for (var j = 0; j < count; j++) {
-      sends.push(sendName);
-    }
+    sends.push({
+      "send" : sendName,
+      "count" : count,
+      "remaining" : count
+    });
     contents[sendName] = 1;
     ++i;
   }
-  post(sends);post();
 }
 
 function rewind() {
@@ -31,6 +32,14 @@ function rewind() {
 }
 
 function bang() {
-  messnamed(sends[current++], "bang");
-  if (current >= sends.length) current = 0;
+  var s = sends[current];
+  if (s.remaining > 0) {
+    messnamed(s.send, "bang");
+    s.remaining--;
+  } else {
+    s.remaining = s.count;
+    current++;
+    if (current >= sends.length) current = 0;
+    bang();
+  }
 }

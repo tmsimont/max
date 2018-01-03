@@ -8,7 +8,7 @@
 			"architecture" : "x86"
 		}
 ,
-		"rect" : [ 25.0, 70.0, 640.0, 480.0 ],
+		"rect" : [ 688.0, 155.0, 640.0, 480.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -28,6 +28,38 @@
 		"digest" : "",
 		"tags" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"frgb" : 0.0,
+					"id" : "obj-11",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 359.0, 257.0, 215.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 5.0, 47.0, 215.0, 20.0 ],
+					"text" : "msmp -p seq -n 1 -i 0 -r 1 -c ezd"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"frgb" : 0.0,
+					"id" : "obj-9",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 359.0, 229.0, 150.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 5.0, 27.0, 150.0, 20.0 ],
+					"text" : "mseq -v 4 -b 4 -r sr -s seq"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"fontname" : "Arial",
 					"fontsize" : 12.0,
