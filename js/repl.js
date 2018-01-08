@@ -8,6 +8,10 @@ function anything() {
   error("Undefined command");post();
 }
 
+function y() {
+  lastY = 0;
+}
+
 /**
  * Helper to parse args passed into textbox
  */
@@ -128,14 +132,15 @@ function msmp() {
         "@args", [
           bufferName, // buffer prefix
           signalName, // sample signal send prefix
-          name // internal receive bang prefix
+          name, // internal receive bang prefix
+          prefix // mixdown send name
         ],
         "@embed", 1
         );
     bsmp.rect = [x, lastY, x + width, lastY + height];
 
     if (createRecv != 0) {
-      var receiver = patcher.newdefault(0, 0, "r", signalName);
+      var receiver = patcher.newdefault(0, 0, "receive~", signalName);
       receiver.rect = [x + width + 10, lastY, x + width + 20, lastY + 20];
       if (connectRecv != 0) {
         patcher.connect(receiver, 0, patcher.getnamed(connectRecv), 0);
@@ -145,6 +150,41 @@ function msmp() {
 
     lastY += height;
     pidx++;
+  }
+}
+
+
+function mnoct() {
+  var a = arrayfromargs(messagename,arguments);
+  var args = readArgs(a);
+  var patcher = this.patcher.parentpatcher;
+
+  var start = require("-s", args);
+  var octaves = argOrDefault("-o", 1, args);
+  var prefix = require("-p", args);
+
+  var height = 110;
+  var width = 90;
+  var x = 0;
+
+  var majorIntervals = [2,2,1,2,2,2,1];
+
+  var intervals = majorIntervals;
+  var idx = 0;
+  var note = start;
+  for (var i = octaves * intervals.length; i >= 0; i-- ) {
+    var bsmp = patcher.newdefault(0, 0, "bpatcher",
+        "BangNote",
+        "@args", [
+          prefix + i, // buffer prefix
+          note,
+          1 // midi channel
+        ],
+        "@embed", 1
+        );
+    bsmp.rect = [x, lastY, x + width, lastY + height];
+    x += width;
+    note += intervals[idx++ % intervals.length]; // starting midi number
   }
 }
 

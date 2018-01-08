@@ -1,6 +1,7 @@
 autowatch = 1;
 outlets = 4;
 
+var dbltab = 0;
 var ignore = 0;
 var controller = new Controller();
 var suggester = new FileSuggester("samples");
@@ -34,7 +35,13 @@ function anything() {
         break;
       case   9: // tab
         ignore = 1;
-        controller.nextSuggestion();
+        // tab hits twice for some reason..
+        if (dbltab == 0) {
+          controller.nextSuggestion();
+          dbltab = 1;
+        } else {
+          dbltab = 0;
+        }
         break;
       case  13: // return
         ignore = 1;

@@ -110,7 +110,6 @@
 					"patching_rect" : [ 205.0, 131.0, 174.0, 23.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 2.0, 1.0, 174.0, 23.0 ],
-					"tabmode" : 0,
 					"varname" : "textbox",
 					"wordwrap" : 0
 				}

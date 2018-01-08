@@ -1,5 +1,6 @@
-var current = 0;
+autowatch = 1;
 
+var current = 0;
 var sends;
 var contents = {};
 
@@ -28,6 +29,9 @@ function rewind() {
   // rewind listeners
   for (var name in contents) {
     messnamed(name + "-R", bang);
+  }
+  for (var i in sends) {
+    sends[i].remaining = sends[i].count;
   }
 }
 

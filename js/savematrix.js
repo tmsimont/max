@@ -3,8 +3,27 @@ autowatch = 1;
 var valmap = {};
 var MATRIX_NAME = jsarguments[1];
 
+function loadToMap(key, val) {
+  valmap[key] = val;
+  var idx = unhash(key);
+  this.patcher.getnamed(MATRIX_NAME).message([
+      parseInt(idx.row),
+      parseInt(idx.col),
+      parseInt(val)
+  ]); 
+}
+
+// outlet all values in valmap
+function bang() {
+  for (var key in valmap) {
+    var idx = unhash(key);
+    outlet(0, ["saveToMap", idx.row, idx.col, valmap[key]]);
+  }
+}
+
 function saveToMap(row, col, val) {
   valmap[hash(row,col)] = val;
+  outlet(0, ["saveToMap", row, col, val]);
 }
 
 function hash(row, col) {
