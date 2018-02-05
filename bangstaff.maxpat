@@ -8,7 +8,7 @@
 			"architecture" : "x86"
 		}
 ,
-		"rect" : [ 75.0, 120.0, 737.0, 480.0 ],
+		"rect" : [ 405.0, 133.0, 737.0, 480.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -211,8 +211,8 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "bangstaff.js",
-				"bootpath" : "/Users/trevsim/Personal/Max/js",
-				"patcherrelativepath" : "./js",
+				"bootpath" : "/Users/trevsim/Personal/Max/js/bangstaff",
+				"patcherrelativepath" : "./js/bangstaff",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
