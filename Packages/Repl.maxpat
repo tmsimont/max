@@ -8,7 +8,7 @@
 			"architecture" : "x86"
 		}
 ,
-		"rect" : [ 688.0, 155.0, 640.0, 480.0 ],
+		"rect" : [ 847.0, 332.0, 640.0, 480.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -28,6 +28,101 @@
 		"digest" : "",
 		"tags" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"id" : "obj-5",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 192.0, 285.0, 113.0, 20.0 ],
+					"saved_object_attributes" : 					{
+						"filename" : "noct.command.js",
+						"parameter_enable" : 0
+					}
+,
+					"text" : "js noct.command.js"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"id" : "obj-4",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 192.0, 345.0, 113.0, 20.0 ],
+					"saved_object_attributes" : 					{
+						"filename" : "smp.command.js",
+						"parameter_enable" : 0
+					}
+,
+					"text" : "js smp.command.js"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"id" : "obj-3",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 192.0, 325.0, 114.0, 20.0 ],
+					"saved_object_attributes" : 					{
+						"filename" : "orch.command.js",
+						"parameter_enable" : 0
+					}
+,
+					"text" : "js orch.command.js"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"id" : "obj-2",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 192.0, 305.0, 110.0, 20.0 ],
+					"saved_object_attributes" : 					{
+						"filename" : "seq.command.js",
+						"parameter_enable" : 0
+					}
+,
+					"text" : "js seq.command.js"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"id" : "obj-1",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 208.0, 126.0, 81.0, 20.0 ],
+					"saved_object_attributes" : 					{
+						"filename" : "repl.args.js",
+						"parameter_enable" : 0
+					}
+,
+					"text" : "js repl.args.js"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"fontname" : "Arial",
 					"fontsize" : 12.0,
@@ -202,6 +297,41 @@
 				"name" : "repl.js",
 				"bootpath" : "/Users/trevsim/Personal/Max/js",
 				"patcherrelativepath" : "../js",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "repl.args.js",
+				"bootpath" : "/Users/trevsim/Personal/Max/js",
+				"patcherrelativepath" : "../js",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "seq.command.js",
+				"bootpath" : "/Users/trevsim/Personal/Max/js/seq",
+				"patcherrelativepath" : "../js/seq",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "orch.command.js",
+				"bootpath" : "/Users/trevsim/Personal/Max/js/orch",
+				"patcherrelativepath" : "../js/orch",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "smp.command.js",
+				"bootpath" : "/Users/trevsim/Personal/Max/js/smp",
+				"patcherrelativepath" : "../js/smp",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "noct.command.js",
+				"bootpath" : "/Users/trevsim/Personal/Max/js/noct",
+				"patcherrelativepath" : "../js/noct",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
