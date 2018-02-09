@@ -1,5 +1,5 @@
 autowatch = 1;
-var bangstaff = new Global("bangstaff");
+var bangstaff = new Global("com.ts.bangstaff");
 bangstaff.view = bangstaff.view || {};
 
 bangstaff.midi = new bangstaff.MidiLookup();
@@ -58,15 +58,19 @@ function anything() {
   switch(messagename) {
     case "keypress":
       switch (a[1]) {
+        // right arrow
         case -12:
           if (theStaff) theStaff.selectNext();
           break;
+        // left arrow
         case -11:
           if (theStaff) theStaff.selectPrev();
           break;
+        // down arrow
         case -10:
           if (queuedBend > -1) queuedBend--;
           break;
+        // up arrow
         case -9:
           if (queuedBend < 1) queuedBend++;
           break;

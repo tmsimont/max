@@ -1,5 +1,5 @@
 autowatch = 1;
-var bangstaff = new Global("bangstaff");
+var bangstaff = new Global("com.ts.bangstaff");
 
 bangstaff.Staff = function(jsthis, patcher, numBeats) {
   var self = this;
