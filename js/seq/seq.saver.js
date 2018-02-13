@@ -1,12 +1,11 @@
 autowatch = 1;
-
-var stateSaver = new Global("com.ts.stateSaver");
+var seq = new Global("com.ts.seq");
 
 /**
  * Uses an external js file to save the matrix state
  * for later reload when the file is saved and loaded.
  */
-stateSaver = function(patcher, loadState) {
+seq.saver = function(patcher, loadState) {
   var matrix, savejs;
   matrix = patcher.getnamed(seq.MATRIX_NAME);
   savejs = patcher.newdefault(20, 20, "js", "savematrix.js", seq.MATRIX_NAME);

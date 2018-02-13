@@ -1,22 +1,19 @@
 autowatch = 1;
-
 var seq = new Global("com.ts.seq");
-var stateSaver = new Global("com.ts.stateSaver");
+var repl = new Global("com.ts.repl");
 
-
-function Sequencer(idx, patcher, replace) {
-  seq.args = readArgs(seq.argsIn);
-  var voices =   require("-v", seq.args);
-  var beats =    require("-b", seq.args);
-  var sendName = require("-s", seq.args);
-  var recvName = require("-r", seq.args);
+seq.Sequencer = function(args, idx, patcher, replace) {
+  var voices =   repl.args.require("-v", args);
+  var beats =    repl.args.require("-b", args);
+  var sendName = repl.args.require("-s", args);
+  var recvName = repl.args.require("-r", args);
 
   var x = 0, y = 0;
   var outputs;
   var driver;
   var visuals = new seq.VisualControls(patcher, x, y + 20, voices, beats);
   var routing = new seq.RoutingControls(patcher, x, y + 20, voices, beats);
-  var saver = new stateSaver(patcher, replace);
+  var saver = new seq.saver(patcher, replace);
 
   //connectRouterToArrayOfMaxObjects(visuals.buttons);
 

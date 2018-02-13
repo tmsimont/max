@@ -8,7 +8,7 @@
 			"architecture" : "x86"
 		}
 ,
-		"rect" : [ 800.0, 97.0, 640.0, 480.0 ],
+		"rect" : [ 481.0, 141.0, 640.0, 480.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -28,6 +28,25 @@
 		"digest" : "",
 		"tags" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"id" : "obj-2",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 189.0, 234.0, 86.0, 20.0 ],
+					"saved_object_attributes" : 					{
+						"filename" : "seq.saver.js",
+						"parameter_enable" : 0
+					}
+,
+					"text" : "js seq.saver.js"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"fontname" : "Arial",
 					"fontsize" : 12.0,
@@ -103,36 +122,9 @@
 				}
 
 			}
-, 			{
-				"box" : 				{
-					"fontname" : "Arial",
-					"fontsize" : 12.0,
-					"id" : "obj-1",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 165.0, 52.0, 114.0, 20.0 ],
-					"saved_object_attributes" : 					{
-						"filename" : "bangseq.js",
-						"parameter_enable" : 0
-					}
-,
-					"text" : "js bangseq.js #1 #2",
-					"varname" : "bangseq"
-				}
-
-			}
  ],
 		"lines" : [  ],
 		"dependency_cache" : [ 			{
-				"name" : "bangseq.js",
-				"bootpath" : "/Users/trevsim/Personal/Max/js",
-				"patcherrelativepath" : "../js",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "seq.counterDriver.js",
 				"bootpath" : "/Users/trevsim/Personal/Max/js/seq",
 				"patcherrelativepath" : "../js/seq",
@@ -155,6 +147,13 @@
 			}
 , 			{
 				"name" : "seq.visualControls.js",
+				"bootpath" : "/Users/trevsim/Personal/Max/js/seq",
+				"patcherrelativepath" : "../js/seq",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "seq.saver.js",
 				"bootpath" : "/Users/trevsim/Personal/Max/js/seq",
 				"patcherrelativepath" : "../js/seq",
 				"type" : "TEXT",

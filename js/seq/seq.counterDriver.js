@@ -1,5 +1,4 @@
 autowatch = 1;
-
 var seq = new Global("com.ts.seq");
 
 /**
