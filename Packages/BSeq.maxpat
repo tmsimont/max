@@ -31,6 +31,26 @@
 				"box" : 				{
 					"fontname" : "Arial",
 					"fontsize" : 12.0,
+					"id" : "obj-1",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 189.0, 134.0, 83.0, 20.0 ],
+					"saved_object_attributes" : 					{
+						"filename" : "seq.main.js",
+						"parameter_enable" : 0
+					}
+,
+					"text" : "js seq.main.js",
+					"varname" : "main"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
 					"id" : "obj-2",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -154,6 +174,13 @@
 			}
 , 			{
 				"name" : "seq.saver.js",
+				"bootpath" : "/Users/trevsim/Personal/Max/js/seq",
+				"patcherrelativepath" : "../js/seq",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "seq.main.js",
 				"bootpath" : "/Users/trevsim/Personal/Max/js/seq",
 				"patcherrelativepath" : "../js/seq",
 				"type" : "TEXT",

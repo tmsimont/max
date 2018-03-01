@@ -3,11 +3,12 @@ var repl = new Global("com.ts.repl");
 
 repl.args = new ArgumentHelper();
 function ArgumentHelper() {
+
   /**
    * Parse args passed into textbox
    */
   this.readArgs = function(a) {
-    var cmdname = a[1];
+    var cmdname = a[0];
     var args = {};
     if (a.length > 2) {
       // args must be in -flag val format
@@ -15,6 +16,7 @@ function ArgumentHelper() {
         args[a[i]] = a[i+1];
       }
     }
+    args._argsIn = a;
     return args;
   }
 

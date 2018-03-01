@@ -3,7 +3,6 @@ var seq = new Global("com.ts.seq");
 
 seq.RoutingControls = function(patcher, x, y, voices, beats) {
   var route, router;
-  // create route
   var route_outs = new Array(beats);
   for (var i = 0; i < beats; ++i) {
     route_outs[i] = i + 1;

@@ -2,15 +2,6 @@ autowatch = 1;
 var repl = new Global("com.ts.repl");
 var seq = new Global("com.ts.seq");
 
-seq.valmap = {};
-seq.argsIn = [];
-seq.args = {};
-seq.jsthis = this;
-seq.textedit = {};
-seq.main_seq = false;
-seq.MATRIX_NAME = "main-matrix";
-
-
 /**
  * mseq command
  * Make a "sequencer" pattern in a BPatcher.
@@ -30,13 +21,9 @@ seq.MATRIX_NAME = "main-matrix";
  */
 function loadbang() {
   repl.register("mseq", function(args, patcher, position) {
-    var voices =   repl.args.require("-v", args);
-    var beats =    repl.args.require("-b", args);
-    var sendName = repl.args.require("-s", args);
-    var recvName = repl.args.require("-r", args);
-
-    var height = 20 * voices + 20;
-    var width = 20 + 18 * beats;
+    var seqArgs = new seq.Args(args._argsIn);
+    var height = 20 * seqArgs.voices + 20;
+    var width = 20 + 18 * seqArgs.beats;
     var x = position.x;
     var y = position.y;
     var bseq = patcher.newdefault(0, 0, 
@@ -44,44 +31,23 @@ function loadbang() {
         "BSeq",
         "@embed", 1);
     bseq.rect = [x, y, x + width, y + height];
-    var banger = bseq.subpatcher().getnamed("bangseq");
-    seq.main_seq = new seq.Sequencer(args, 0, bseq.subpatcher(), false);
+    var banger = bseq.subpatcher().getnamed("main");
+    var ms = new seq.Sequencer(seqArgs, banger, false);
+    /*
+    banger.message("make", 
+        seqArgs.voices,
+        seqArgs.beats,
+        seqArgs.sendName,
+        seqArgs.recvName);
+        */
   });
 }
 
-function saveToMap() {
-  var a = arrayfromargs(messagename,arguments);
-  var row = a[1];
-  var col = a[2];
-  var val = a[3];
-  seq.valmap[hash(row,col)] = val;
-}
-
-function hash(row, col) {
-  return row + "-" + col;
-}
-
-
-function text() {
-  var a = arrayfromargs(messagename,arguments);
-  // TODO: validate args first
-  a.shift();
-  seq.argsIn = a;
-  if (seq.main_seq) {
-    seq.main_seq.replace();
-  } else {
-    // remove everything except this js object
-    var obj = this.patcher.firstobject;
-    do {
-      if (obj.js != seq.jsthis) {
-        var temp = obj.nextobject;
-        this.patcher.remove(obj);
-        obj = temp;
-      } else {
-        obj = obj.nextobject;
-      }
-    } while (obj);
-    // new sequencer from scratch, loading valmap
-    seq.main_seq = new Sequencer(0, this.patcher, true);
-  }
+seq.Args = function(args) {
+  var read = repl.args.readArgs(args);
+  this.voices =   repl.args.require("-v", read);
+  this.beats =    repl.args.require("-b", read);
+  this.sendName = repl.args.require("-s", read);
+  this.recvName = repl.args.require("-r", read);
+  this.argsIn = args;
 }
